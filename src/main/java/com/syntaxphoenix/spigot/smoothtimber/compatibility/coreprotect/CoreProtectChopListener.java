@@ -1,5 +1,6 @@
 package com.syntaxphoenix.spigot.smoothtimber.compatibility.coreprotect;
 
+import com.syntaxphoenix.spigot.smoothtimber.platform.Platform;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +19,7 @@ public class CoreProtectChopListener implements Listener {
     @EventHandler
     public void onChopEvent(final AsyncPlayerChoppedTreeEvent event) {
         for (final Location location : event.getBlockLocations()) {
-            compat.logRemoval(event.getPlayer().getName(), location, Locator.getBlock(location));
+            Platform.getPlatform().regionalTask(location, () -> compat.logRemoval(event.getPlayer().getName(), location, Locator.getBlock(location)));
         }
     }
 

@@ -1,5 +1,6 @@
 package com.syntaxphoenix.spigot.smoothtimber.compatibility.towny;
 
+import com.syntaxphoenix.spigot.smoothtimber.platform.Platform;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,11 +19,12 @@ public class TownyChopListener implements Listener {
     @EventHandler
     public void onAsyncPlayerChopTree(final AsyncPlayerChopTreeEvent event) {
         for (final Location location : event.getBlockLocations()) {
-            if (!towny.canDestroy(event.getPlayer(), location.getBlock())) {
-                event.setCancelled(true);
-                event.setReason(DefaultReason.TOWNY);
-                break;
-            }
+            Platform.getPlatform().regionalTask(location, () -> {
+                if (!towny.canDestroy(event.getPlayer(), location.getBlock())) {
+                    event.setCancelled(true);
+                    event.setReason(DefaultReason.TOWNY);
+                }
+            });
         }
     }
 

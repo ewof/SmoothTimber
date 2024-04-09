@@ -57,7 +57,7 @@ public class SmoothTimber extends JavaPlugin {
         final ArrayList<Location> woodBlocks, final int limit) {
 
         final AsyncPlayerChopTreeEvent event = new AsyncPlayerChopTreeEvent(player, location, change, tool, woodBlocks, limit);
-        Bukkit.getPluginManager().callEvent(event);
+        Platform.getPlatform().asyncTask(() -> Bukkit.getPluginManager().callEvent(event));
 
         if (event.isCancelled()) {
             player.sendMessage(Message.GLOBAL_PREFIX.colored() + ' ' + Message.ABORT_MESSAGE.colored(new String[] {
@@ -80,7 +80,7 @@ public class SmoothTimber extends JavaPlugin {
 
     public static void triggerChoppedEvent(final Player player, final Location location, final VersionChanger change, final ItemStack tool,
         final ArrayList<Location> woodBlocks, final int limit) {
-        Bukkit.getPluginManager().callEvent(new AsyncPlayerChoppedTreeEvent(player, location, change, tool, woodBlocks, limit));
+        Platform.getPlatform().asyncTask(() -> Bukkit.getPluginManager().callEvent(new AsyncPlayerChoppedTreeEvent(player, location, change, tool, woodBlocks, limit)));
     }
 
 }

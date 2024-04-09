@@ -83,7 +83,7 @@ public class BlockBreakListener implements Listener {
             }
             event.setCancelled(true);
             CooldownHelper.trigger(player);
-            Platform.getPlatform().asyncTask((Runnable) () -> {
+            Platform.getPlatform().regionalTask(location, (Runnable) () -> {
                 final int maxItems = CutterConfig.ENABLE_LUCK ? change.getMaxDropCount(tool) : 1;
                 final ArrayList<Location> woodBlocks = new ArrayList<>();
                 final int limit = Limiter.getLimit(player);

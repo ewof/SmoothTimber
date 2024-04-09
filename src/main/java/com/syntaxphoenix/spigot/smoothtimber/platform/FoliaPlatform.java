@@ -25,7 +25,7 @@ final class FoliaPlatform extends Platform {
         this.plugin = plugin;
         final Server server = plugin.getServer();
         final AbstractReflect reflect = new Reflect(server.getClass()).searchMethod("async", "getAsyncScheduler")
-            .searchMethod("region", "getRegionScheduler").searchMethod("global", "getGlobalRegionScheduler");
+                .searchMethod("region", "getRegionScheduler").searchMethod("global", "getGlobalRegionScheduler");
         this.global = (GlobalRegionScheduler) reflect.run(server, "global");
         this.region = (RegionScheduler) reflect.run(server, "region");
         this.async = (AsyncScheduler) reflect.run(server, "async");
@@ -79,7 +79,9 @@ final class FoliaPlatform extends Platform {
 
     @Override
     public void asyncTaskTimer(final Runnable runnable, final long delay, final long repeat) {
-        async.runAtFixedRate(plugin, t -> runnable.run(), delay * 50L, repeat * 50L, TimeUnit.MILLISECONDS);
+        async.runAtFixedRate(plugin, t -> runnable.run(), (delay <= 0 ? 1 : delay) * 50L,
+                (repeat <= 0 ? 1 : repeat) * 50L,
+                TimeUnit.MILLISECONDS);
     }
 
 }
