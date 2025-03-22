@@ -59,7 +59,7 @@ public final class v1_8xChanger implements VersionChanger {
     @Override
     public ItemStack removeDurabilityFromItem(final ItemStack stack) {
         if (CutterConfig.ENABLE_UNBREAKING) {
-            final int level = stack.getEnchantmentLevel(Enchantment.DURABILITY);
+            final int level = stack.getEnchantmentLevel(Enchantment.UNBREAKING);
             final float chance = 100 / (level <= 0 ? 1 : level + 1);
             if (RANDOM.nextFloat(0, 100) > chance) {
                 return stack;
@@ -83,7 +83,7 @@ public final class v1_8xChanger implements VersionChanger {
 
     @Override
     public int getMaxDropCount(final ItemStack stack) {
-        final int level = stack.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+        final int level = stack.getEnchantmentLevel(Enchantment.LOOTING);
         return level <= 0 ? 1 : level + 1;
     }
 
